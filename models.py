@@ -45,7 +45,7 @@ class Audition(Base):
     role = relationship('Role', back_populates='auditions')
     
     def __repr__(self) -> str:
-        return f"Audition(id={self.id}, actor={self.actor}, location={self.location}, phone={self.phone}, hired={self.hired}, role_id={self.role_id}, role={self.role})"
+        return f"Audition(id={self.id}, actor={self.actor}, location={self.location}, phone={self.phone}, hired={self.hired}, role={self.role})"
 
     def call_back(self) -> None:
         self.hired = True

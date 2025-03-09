@@ -1,4 +1,5 @@
 from models import session, Audition, Role
+from sqlalchemy import select
 
 # CREATE
 role1= Role(
@@ -28,17 +29,20 @@ session.add_all([role1, audition1, audition2])
 session.commit
 
 # READ
-actress = select(Audition).where(Audition.actor == "Mary")
+stmt = select(Audition).where(Audition.actor == "Mary")
+actress = session.execute(stmt).scalar()
+
 print(actress)
 
 audition1.call_back()
-lead = select(Audition).where(Audition.hired == True)
+stmt = select(Audition).where(Audition.hired == True)
+lead = session.execute(stmt).scalar()
 print(lead)
 print(role1.lead())
 
 # UPDATE
 stmt = select(Role).where(Role.character_name == "Eren Yeager")
-main_character = session.scalars(stmt)
+main_character = session.scalars(stmt).first()
 main_character.character_name = "Monkey D Luffy"
 session.commit()
 print(role1.character_name)
